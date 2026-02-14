@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Toaster, toast } from "react-hot-toast"
 import "./App.css"
 
-function App () {
-  var [title, setTitle] = useState("")
-  var [description, setDesription] = useState("")
-  var [data, setData] = useState([])
+const App = () => {
+  const [title, setTitle] = useState("")
+  const [description, setDesription] = useState("")
+  const [data, setData] = useState([])
 
-  var newBlog = {
+  const newBlog = {
     BlogTitle: title,
     BlogDescription: description
   }
 
   async function createBlog() {
-    if (title ==""|| description=="") {
+    if (!title || !description) {
       toast.error("Please fill all fields")
       return
     }
 
-    var response = await fetch("https://698d5dffb79d1c928ed51ba9.mockapi.io/data", {
+    const response = await fetch("https://698d5dffb79d1c928ed51ba9.mockapi.io/data", {
       method: "post",
       headers: {
         "content-Type": "application/json"
@@ -37,8 +37,8 @@ function App () {
   }
 
   async function fetchData() {
-    var result = await fetch("https://698d5dffb79d1c928ed51ba9.mockapi.io/data")
-    var jsonResult = await result.json()
+    const result = await fetch("https://698d5dffb79d1c928ed51ba9.mockapi.io/data/")
+    const jsonResult = await result.json()
     setData(jsonResult.reverse())
   }
 
@@ -47,7 +47,7 @@ function App () {
   }, [])
 
   async function deleteBlog(blogItem) {
-    var deletedBlog = await fetch(`https://698d5dffb79d1c928ed51ba9.mockapi.io/data${blogItem.id}`, {
+    const deletedBlog = await fetch(`https://698d5dffb79d1c928ed51ba9.mockapi.io/data/${blogItem.id}`, {
       method: "delete"
     })
 
@@ -60,29 +60,25 @@ function App () {
   }
 
   async function updateBlog(updateItem) {
-    var newTitle = prompt("Enter new Title:")
-    var newDescription = prompt("Enter new Description:")
-
+    const newTitle = prompt("Enter new Title:")
+    const newDescription = prompt("Enter new Description:")
     if(newTitle=="" || newDescription==""){
-      toast.error("fill all fields")
+      toast.error("fill all the required fields")
       return
     }
 
-
-
-    var updatedblog = {
+    const updatedblog = {
       BlogTitle: newTitle,
       BlogDescription: newDescription
     }
 
-    var blogUpdated = await fetch(`${updateItem.id}`, {
+    const blogUpdated = await fetch(`https://698d5dffb79d1c928ed51ba9.mockapi.io/data/${updateItem.id}`, {
       method: "put",
       headers: {
         "content-Type": "application/json"
       },
       body: JSON.stringify(updatedblog)
     })
-   
 
     if (blogUpdated.ok) {
       toast.success("Blog Updated ✨")

@@ -18,7 +18,7 @@ function App () {
       return
     }
 
-    var response = await fetch("API KEY", {
+    var response = await fetch("https://698d5dffb79d1c928ed51ba9.mockapi.io/data", {
       method: "post",
       headers: {
         "content-Type": "application/json"
@@ -37,7 +37,7 @@ function App () {
   }
 
   async function fetchData() {
-    var result = await fetch("//API KEY")
+    var result = await fetch("https://698d5dffb79d1c928ed51ba9.mockapi.io/data")
     var jsonResult = await result.json()
     setData(jsonResult.reverse())
   }
@@ -47,7 +47,7 @@ function App () {
   }, [])
 
   async function deleteBlog(blogItem) {
-    var deletedBlog = await fetch(`//API KEY${blogItem.id}`, {
+    var deletedBlog = await fetch(`https://698d5dffb79d1c928ed51ba9.mockapi.io/data${blogItem.id}`, {
       method: "delete"
     })
 
